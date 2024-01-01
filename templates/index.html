@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model Deployment</title>
+
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        flex-direction: column;
+        background-image: url("static/images/DIP_WALLPAPER.JPG"); /* Replace 'background.jpg' with your image file path */
+        background-size: cover; /* Cover the entire viewport */
+        background-position: center; /* Center the background image */
+        background-repeat: no-repeat; /* Do not repeat the background image */
+        height: 100vh; /* Set the body height to full viewport height */
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      label {
+        display: block;
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #3498db;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      label:hover {
+        background-color: #2980b9;
+      }
+
+      button {
+        background-color: #2ecc71;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #27ae60;
+      }
+
+      #result {
+        margin-top: 20px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        display: none;
+      }
+      #result p {
+        font-size: 24px;
+        color: black; /* Change the font color to green, you can adjust it */
+        font-family: "Helvetica", sans-serif; /* Change the font family, you can adjust it */
+        font-weight: bold; /* Make the text bold */
+        margin: 10px 0;
+      }
+
+      #loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      p {
+        font-size: 18px;
+        color: #333;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 0;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {% if final_predictions is defined %}
+
+    <div id="result" style="display: block">
+      <p>{{ final_predictions }}</p>
+      <button onclick="window.location.href='/'">Test Again</button>
+    </div>
+    {% else %}
+    <form
+      action="/detect_objects"
+      method="POST"
+      enctype="multipart/form-data"
+      onsubmit="showLoader()"
+      id="uploadForm"
+    >
+      <label for="fileInput">Choose File</label>
+      <input type="file" name="file" id="fileInput" required />
+      <button type="submit">Upload</button>
+    </form>
+    <div id="loader"></div>
+
+    {% endif %}
+
+    <script>
+      function showLoader() {
+        // Hide the form when the loader is displayed
+        document.getElementById("uploadForm").style.display = "none";
+        document.getElementById("loader").style.display = "block";
+        document.getElementById("result").style.display = "none";
+      }
+
+      // Simulating a delay for demonstration purposes
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("result").style.display = "block";
+      }, 3000); // Replace with the actual time it takes for the prediction
+    </script>
+  </body>
+</html>
