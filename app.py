@@ -71,7 +71,7 @@ def detect_objects():
     file_path = os.path.join(upload_folder, filename)
     file.save(file_path)
 
-    weights_path = "weights_50_epochs.pt"
+    weights_path = "Yolo_Weights.pt"
 
     # Run YOLOv5 detection command
     detection_command = f'python yolov7-main/detect.py --weights "{weights_path}" --source "{file_path}" --save-cropped --conf 0.2'
