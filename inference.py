@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms, models, datasets
 from sklearn.model_selection import train_test_split
 
-Model_path = "AS.pth"
+Model_path = "Resnet_Weights.pth"
 Classes = ['Athletic shoes', 'Boat', 'Flats', 'Heels', 'Knee High', 'Loafers', 'Oxford', 'Sneakers']
 
 def predict_image(image_path, model_path=Model_path, class_labels=Classes, device='cpu'):
